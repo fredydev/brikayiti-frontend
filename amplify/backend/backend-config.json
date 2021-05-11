@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "brikayitireact0ba89a34": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
