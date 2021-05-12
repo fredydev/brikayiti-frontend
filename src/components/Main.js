@@ -8,7 +8,7 @@ import Profile from "./profile"
 import Annonce from "./annonces/get/One"
 import {Switch, Route} from "react-router-dom"
 import { GlobalState } from '../context/GlobalState';
-
+import PrivateRoute from "./PrivateRoute"
 export default function Main() {
     return (
         <div>
@@ -17,7 +17,7 @@ export default function Main() {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/signup" component={Signup} />
-                    <Route exact path="/profile" component={Profile} />
+                    <PrivateRoute exact path="/profile" component={() => <Profile  />} />
                     <Route exact path="/new-annonce" component={Annonces} />
                     <Route exact path="/search" component={Search} />
                     <Route exact path="/:category/:subcategory/:id" component={Annonce} />

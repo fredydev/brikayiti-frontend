@@ -8,14 +8,14 @@ import {AiFillEye, AiOutlineEyeInvisible,AiFillFacebook} from 'react-icons/ai'
 import {FcGoogle} from "react-icons/fc"
 import { GlobalContext,dispatcher } from '../../context/GlobalState';
 
-const Login = () => {
+const Login = (props) => {
 
     const context = useContext(GlobalContext)
-    // console.log(context)
+    console.log(context) 
     useEffect(()=>{
         dispatcher.setSignupStage(0)
     },[])
-    if (context.user.isLoggedIn) return <Redirect to="/profile" />
+    if (context.user.isLoggedIn) /*props.history.push("/profile")*/ return <Redirect to="/profile" />
     return (
     <Wrapper >
     

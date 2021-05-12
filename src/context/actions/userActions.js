@@ -6,24 +6,35 @@ import { Auth } from 'aws-amplify'
 export const loginUser =  user => {
 	Auth.signIn(user.username, user.password)
 		.then(res=>{
-			//console.log(user)
-			getUserdata(res.attributes.sub)
-			.then(data=>{
-				//console.log(data)
+			console.log(res)
+			// getUserdata(res.attributes.sub)
+			const getToken = async () => {
+				let  token = (await Auth.currentSession()).getIdToken().getJwtToken()
+				const data = {token,email:user.attributes.email,username: "sagessegina"}
 				dispatcher.dispatchUser({
 					type: 'LOGIN_USER',
 					payload: data
 				})
-			})
-			.catch(err=>console.log(err))
+				// return token
+			}
+			  getToken()
+			// getUserdata(res)
+			// .then(data=>{
+			// 	//console.log(data)
+				// dispatcher.dispatchUser({
+				// 	type: 'LOGIN_USER',
+				// 	payload: data
+				// })
+			// })
+			// .catch(err=>console.log(err))
 		})
 		.catch(err=>{
-			//console.log(err)
-			dispatcher.dispatchUser({
-				type: 'FAIL',
-				message: err
-			});
-			dispatcher.setIsError(true);
+			console.log(err)
+			// dispatcher.dispatchUser({
+			// 	type: 'FAIL',
+			// 	message: err
+			// });
+			// dispatcher.setIsError(true);
 		})
 	
 }
@@ -31,46 +42,57 @@ export const onRouteUpdateContext =  () => {
 	Auth.currentAuthenticatedUser()
 	.then(user => {
 		//console.log(user)
-		getUserdata(user.attributes.sub)
-		.then(data=>{
-			//console.log(data)
+		// getUserdata(user.attributes.sub)
+		// .then(data=>{
+		// 	//console.log(data)
+		const getToken = async () => {
+			let  token = (await Auth.currentSession()).getIdToken().getJwtToken()
+			const data = {token,email:user.attributes.email,username: "sagessegina"}
 			dispatcher.dispatchUser({
 				type: 'LOGIN_USER',
 				payload: data
 			})
-		})
-		.catch(err=>console.log(err))	
+			// return token
+		}
+		  getToken()
+		// 	const data = {token,email:user.attributes.email,username: "sagessegina"}
+		// 	dispatcher.dispatchUser({
+		// 		type: 'LOGIN_USER',
+		// 		payload: data
+		// 	})
+		// })
+		// .catch(err=>console.log(err))	
 	})
 	.catch(err => {
 		window.localStorage.setItem('gatsbyUser', null)
 	})
 }
-export const getUserdata = async (sub) => {
-	let token = await getToken()
-	let myHeaders = new Headers();
-	myHeaders.append("Authorization", "Bearer "+token)
-	const requestOptions = {
-		method: 'GET',
-		headers: myHeaders,
-		redirect: 'follow'
-	};
-	let result = await fetch(API+"/users/"+sub,requestOptions)
-	.then(resp=>resp.json())
-	.then(data=>{
-		let newdata = {...data.user}
-		newdata.token = token
-		return newdata
-	})
-	.catch((err)=>{
-		return err
-	})
-	return result
-}
+// export const getUserdata = async (sub) => {
+// 	let token = "await getToken()"
+// 	let myHeaders = new Headers();
+// 	myHeaders.append("Authorization", "Bearer "+token)
+// 	const requestOptions = {
+// 		method: 'GET',
+// 		headers: myHeaders,
+// 		redirect: 'follow'
+// 	};
+// 	let result = await fetch(API+"/users/"+sub,requestOptions)
+// 	.then(resp=>resp.json())
+// 	.then(data=>{
+// 		let newdata = {...data.user}
+// 		newdata.token = token
+// 		return newdata
+// 	})
+// 	.catch((err)=>{
+// 		return err
+// 	})
+// 	return result
+// }
 
-const getToken = async () => {
-	let  token = (await Auth.currentSession()).getIdToken().getJwtToken()
-	return token
-}
+// // const getToken = async () => {
+// // 	let  token = (await Auth.currentSession()).getIdToken().getJwtToken()
+// // 	return token
+// // }
 export const registerUser = (stage,user = {}) => {
 	if(stage===0){
 		console.log("registring")

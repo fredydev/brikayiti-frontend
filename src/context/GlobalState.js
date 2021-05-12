@@ -1,4 +1,4 @@
-import React, { useState, useReducer, createContext } from 'react';
+import React, { useState, useReducer, createContext,useEffect } from 'react';
 // import axios from 'axios';
 
 import { getCategory, createCategory, updateCategory, deleteCategory } from './actions/categoryActions';
@@ -10,7 +10,7 @@ from './actions/annonceActions';
 import annonceReducers from './reducers/annonceReducers';
 import categoryReducers from './reducers/categoryReducers';
 import userReducers from './reducers/userReducers';
-
+// console.log(userReducers)
 export const GlobalContext = createContext();
 
 export let dispatcher = {}
@@ -62,7 +62,6 @@ export const GlobalState = props => {
   }
 
   // category, user,
-
   return (
     <GlobalContext.Provider
       value={{ annonces, annonce, category, user, isLoaded, isRedirected, isError,

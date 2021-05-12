@@ -7,10 +7,12 @@ const initState = {
 	isLoggedIn: false
 };
 // eslint-disable-next-line
-export default function( action,state = initState) {
+export default function(state = initState, action) {
+	// console.log(action)
+	// console.log(state.type)
 	switch (action.type) {
 		case 'LOGIN_USER':
-			// console.log(action.payload)
+			// console.log(action)
 			return {
 				...state,
 				token: action.payload.token,
@@ -31,12 +33,14 @@ export default function( action,state = initState) {
 				...state,
 				message: action.message,
 				isLoggedIn: false
-			}
+			}	
 		case 'LOG_OUT':
 			return {
 				initState
 			}
 		default:
+			// console.log("polo")
+			console.log(state)
 			return state;
 	}
 }
